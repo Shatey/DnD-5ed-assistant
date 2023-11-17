@@ -59,6 +59,7 @@ class _NewInitiativeItemState extends State<NewInitiativeItem> {
       initiative: initiative,
       kd: kd,
       statuses: {},
+      monsterId: -1,
     ));
     // Закрытие поп-апа
     Navigator.of(context).pop();

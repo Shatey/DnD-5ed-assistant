@@ -3,7 +3,7 @@ import 'package:initiative_support/widgets/initiative/initiative_actions/new_ini
 import 'package:initiative_support/widgets/initiative/initiative_list/initiative_list.dart';
 import 'package:initiative_support/models/initiative/initiative_item_model.dart';
 import 'package:initiative_support/widgets/main_drawer.dart';
-import 'package:initiative_support/widgets/statuses/statuses_screen.dart';
+import 'package:initiative_support/screens/statuses_screen.dart';
 
 class Initiative extends StatefulWidget {
   const Initiative({super.key});
@@ -17,17 +17,41 @@ class Initiative extends StatefulWidget {
 class _InitiativeState extends State<Initiative> {
   final List<InitiativeItemModel> _characters = [
     InitiativeItemModel(
-        name: 'name1',
-        maxHp: 11,
-        initiative: 10,
-        kd: 12,
-        statuses: {'Stunned': 1, 'Down': -1, 'test': 2}),
+      id: 1,
+      monsterId: -1,
+      name: 'name1',
+      maxHp: 11,
+      initiative: 10,
+      kd: 12,
+      statuses: {'Stunned': 1, 'Down': -1, 'test': 2},
+    ),
     InitiativeItemModel(
-        name: 'name2', maxHp: 11, initiative: 11, kd: 12, statuses: {}),
+      id: 2,
+      monsterId: -1,
+      name: 'name2',
+      maxHp: 11,
+      initiative: 11,
+      kd: 12,
+      statuses: {},
+    ),
     InitiativeItemModel(
-        name: 'name4', maxHp: 11, initiative: 13, kd: 12, statuses: {}),
+      id: 3,
+      monsterId: -1,
+      name: 'name4',
+      maxHp: 11,
+      initiative: 13,
+      kd: 12,
+      statuses: {},
+    ),
     InitiativeItemModel(
-        name: 'name3', maxHp: 11, initiative: 19, kd: 12, statuses: {}),
+      id: 4,
+      monsterId: -1,
+      name: 'name3',
+      maxHp: 11,
+      initiative: 19,
+      kd: 12,
+      statuses: {},
+    ),
   ];
   int _round = 1;
 

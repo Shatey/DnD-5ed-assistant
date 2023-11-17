@@ -1,18 +1,21 @@
 class InitiativeItemModel {
-  InitiativeItemModel(
-      {required this.name,
-      required this.maxHp,
-      required this.initiative,
-      required this.kd,
-      required this.statuses})
-      : currentHp = maxHp;
-
+  InitiativeItemModel({
+    this.id = -1,
+    required this.name,
+    required this.maxHp,
+    required this.initiative,
+    required this.kd,
+    required this.monsterId,
+    required this.statuses,
+  }) : currentHp = maxHp;
+  int id;
   String name;
   int kd;
   int maxHp;
-  int? currentHp;
+  int currentHp;
   int initiative;
   bool hasActed = false;
+  int monsterId;
   Map<String, int> statuses;
 
   void sort(List<InitiativeItemModel> items) {

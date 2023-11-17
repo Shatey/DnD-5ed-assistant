@@ -127,7 +127,7 @@ class _EditInitiativeItemState extends State<EditInitiativeItem> {
     setState(() {
       // widget.editHP(widget.mob.currentHp! - damage);
       widget.mob.currentHp = CharacteristicsChecker.getValidCharacteristicValue(
-          widget.mob.currentHp! - damage);
+          widget.mob.currentHp - damage);
     });
   }
 
@@ -140,7 +140,7 @@ class _EditInitiativeItemState extends State<EditInitiativeItem> {
     setState(() {
       // widget.editHP(widget.mob.currentHp! + heal);
       widget.mob.currentHp = CharacteristicsChecker.getValidCharacteristicValue(
-          widget.mob.currentHp! + heal);
+          widget.mob.currentHp + heal);
     });
   }
 
