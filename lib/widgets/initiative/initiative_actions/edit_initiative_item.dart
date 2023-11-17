@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:initiative_support/models/initiative/initiative_item_model.dart';
+import 'package:initiative_support/services/initiativeDB.dart';
 import 'package:initiative_support/utils/characteristics_checker.dart';
 
-class EditInitiativeItem extends StatefulWidget {
+class EditInitiativeItem extends ConsumerStatefulWidget {
   const EditInitiativeItem({
     super.key,
     required this.mob,
@@ -25,12 +27,12 @@ class EditInitiativeItem extends StatefulWidget {
   // final void Function(int newInitiative) editInitiative;
 
   @override
-  State<EditInitiativeItem> createState() {
+  ConsumerState<EditInitiativeItem> createState() {
     return _EditInitiativeItemState();
   }
 }
 
-class _EditInitiativeItemState extends State<EditInitiativeItem> {
+class _EditInitiativeItemState extends ConsumerState<EditInitiativeItem> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _hpController = TextEditingController();
   final TextEditingController _kdController = TextEditingController();
@@ -88,6 +90,7 @@ class _EditInitiativeItemState extends State<EditInitiativeItem> {
     }
     setState(() {
       // widget.editName(newName);
+      ref.read(initiativeProvider.notifier).updateInitiativeItem(widget.mob);
       widget.mob.name = newName;
     });
   }
@@ -100,6 +103,7 @@ class _EditInitiativeItemState extends State<EditInitiativeItem> {
     }
     setState(() {
       // widget.editMaxHP(newHP);
+      ref.read(initiativeProvider.notifier).updateInitiativeItem(widget.mob);
       widget.mob.maxHp =
           CharacteristicsChecker.getValidCharacteristicValue(newHP);
     });
@@ -113,6 +117,7 @@ class _EditInitiativeItemState extends State<EditInitiativeItem> {
     }
     setState(() {
       // widget.editHP(newHP);
+      ref.read(initiativeProvider.notifier).updateInitiativeItem(widget.mob);
       widget.mob.currentHp =
           CharacteristicsChecker.getValidCharacteristicValue(newHP);
     });
@@ -126,6 +131,7 @@ class _EditInitiativeItemState extends State<EditInitiativeItem> {
     }
     setState(() {
       // widget.editHP(widget.mob.currentHp! - damage);
+      ref.read(initiativeProvider.notifier).updateInitiativeItem(widget.mob);
       widget.mob.currentHp = CharacteristicsChecker.getValidCharacteristicValue(
           widget.mob.currentHp - damage);
     });
@@ -139,6 +145,7 @@ class _EditInitiativeItemState extends State<EditInitiativeItem> {
     }
     setState(() {
       // widget.editHP(widget.mob.currentHp! + heal);
+      ref.read(initiativeProvider.notifier).updateInitiativeItem(widget.mob);
       widget.mob.currentHp = CharacteristicsChecker.getValidCharacteristicValue(
           widget.mob.currentHp + heal);
     });
@@ -152,6 +159,7 @@ class _EditInitiativeItemState extends State<EditInitiativeItem> {
     }
     setState(() {
       // widget.editKD(newKD);
+      ref.read(initiativeProvider.notifier).updateInitiativeItem(widget.mob);
       widget.mob.kd = CharacteristicsChecker.getValidCharacteristicValue(newKD);
     });
   }
@@ -164,6 +172,7 @@ class _EditInitiativeItemState extends State<EditInitiativeItem> {
     }
     setState(() {
       // widget.editInitiative(newInitiative);
+      ref.read(initiativeProvider.notifier).updateInitiativeItem(widget.mob);
       widget.mob.initiative =
           CharacteristicsChecker.getValidCharacteristicValue(newInitiative);
     });

@@ -1,63 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:initiative_support/services/initiativeDB.dart';
 import 'package:initiative_support/widgets/initiative/initiative_actions/new_initiative_item.dart';
 import 'package:initiative_support/widgets/initiative/initiative_list/initiative_list.dart';
 import 'package:initiative_support/models/initiative/initiative_item_model.dart';
 import 'package:initiative_support/widgets/main_drawer.dart';
 import 'package:initiative_support/screens/statuses_screen.dart';
 
-class Initiative extends StatefulWidget {
+class Initiative extends ConsumerStatefulWidget {
   const Initiative({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<Initiative> createState() {
     return _InitiativeState();
   }
 }
 
-class _InitiativeState extends State<Initiative> {
-  final List<InitiativeItemModel> _characters = [
-    InitiativeItemModel(
-      id: 1,
-      monsterId: -1,
-      name: 'name1',
-      maxHp: 11,
-      initiative: 10,
-      kd: 12,
-      statuses: {'Stunned': 1, 'Down': -1, 'test': 2},
-    ),
-    InitiativeItemModel(
-      id: 2,
-      monsterId: -1,
-      name: 'name2',
-      maxHp: 11,
-      initiative: 11,
-      kd: 12,
-      statuses: {},
-    ),
-    InitiativeItemModel(
-      id: 3,
-      monsterId: -1,
-      name: 'name4',
-      maxHp: 11,
-      initiative: 13,
-      kd: 12,
-      statuses: {},
-    ),
-    InitiativeItemModel(
-      id: 4,
-      monsterId: -1,
-      name: 'name3',
-      maxHp: 11,
-      initiative: 19,
-      kd: 12,
-      statuses: {},
-    ),
-  ];
+class _InitiativeState extends ConsumerState<Initiative> {
+  late Future<void> _initiativeItems;
+  List<InitiativeItemModel> _characters = [];
+  // final List<InitiativeItemModel> _characters = [
+  //   InitiativeItemModel(
+  //     id: 1,
+  //     monsterId: -1,
+  //     name: 'name1',
+  //     maxHp: 11,
+  //     initiative: 10,
+  //     kd: 12,
+  //     statuses: {'Stunned': 1, 'Down': -1, 'test': 2},
+  //   ),
+  //   InitiativeItemModel(
+  //     id: 2,
+  //     monsterId: -1,
+  //     name: 'name2',
+  //     maxHp: 11,
+  //     initiative: 11,
+  //     kd: 12,
+  //     statuses: {},
+  //   ),
+  //   InitiativeItemModel(
+  //     id: 3,
+  //     monsterId: -1,
+  //     name: 'name4',
+  //     maxHp: 11,
+  //     hasActed: true,
+  //     initiative: 13,
+  //     kd: 12,
+  //     statuses: {},
+  //   ),
+  //   InitiativeItemModel(
+  //     id: 4,
+  //     monsterId: -1,
+  //     name: 'name3',
+  //     maxHp: 11,
+  //     initiative: 19,
+  //     kd: 12,
+  //     statuses: {},
+  //   ),
+  // ];
   int _round = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _initiativeItems =
+        ref.read(initiativeProvider.notifier).getInitiativeItems();
+    // for (var item in _characters) {
+    //   ref.read(initiativeProvider.notifier).addInitiativeItem(item);
+    // }
+  }
 
   void _saveNewCharacter(InitiativeItemModel item) {
     setState(() {
-      _characters.add(item);
+      ref.read(initiativeProvider.notifier).addInitiativeItem(item);
+      // _characters.add(item);
       _sortItems();
     });
   }
@@ -161,6 +177,7 @@ class _InitiativeState extends State<Initiative> {
 
   @override
   Widget build(BuildContext context) {
+    _characters = ref.watch(initiativeProvider);
     Widget mainContent = _characters.isEmpty
         ? Center(
             child: Center(

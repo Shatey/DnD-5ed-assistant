@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:initiative_support/models/bestiary/monster_details.dart';
-import 'package:initiative_support/services/databaseService.dart';
 import 'package:initiative_support/screens/initiative.dart';
 import 'package:initiative_support/widgets/main_drawer.dart';
 import 'package:initiative_support/screens/statuses_screen.dart';
@@ -64,7 +62,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     //       description: "descript ion".split(' '),
     //     ));
     // _monstersFuture = ref.read(bestiaryProvider.notifier).getBestiary();
-    ref.read(bestiaryProvider.notifier).clearBestiary();
+    // ref.read(bestiaryProvider.notifier).clearBestiary();
   }
 
   @override
