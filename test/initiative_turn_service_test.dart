@@ -7,14 +7,15 @@ void main() {
     required String name,
     required int initiative,
     bool hasActed = false,
+    Map<String, int>? statuses,
   }) {
     return InitiativeItemModel(
       name: name,
       initiative: initiative,
-      kd: 10,
+      armorClass: 10,
       maxHp: 10,
       monsterId: -1,
-      statuses: {},
+      statuses: statuses ?? {},
       hasActed: hasActed,
       currentHp: 10,
     );
@@ -48,6 +49,43 @@ void main() {
 
       expect(result.round, 2);
       expect(result.items.every((item) => !item.hasActed), true);
+    });
+
+    test('normalizeRound decreases temporary statuses', () {
+      final items = [
+        createItem(
+          name: 'A',
+          initiative: 10,
+          hasActed: true,
+          statuses: {'Poisoned': 2, 'Prone': -1},
+        ),
+      ];
+
+      final result = InitiativeTurnService.normalizeRound(
+        items: items,
+        currentRound: 1,
+      );
+
+      expect(result.items.first.statuses['Poisoned'], 1);
+      expect(result.items.first.statuses['Prone'], -1);
+    });
+
+    test('normalizeRound removes expired statuses', () {
+      final items = [
+        createItem(
+          name: 'A',
+          initiative: 10,
+          hasActed: true,
+          statuses: {'Stunned': 1},
+        ),
+      ];
+
+      final result = InitiativeTurnService.normalizeRound(
+        items: items,
+        currentRound: 1,
+      );
+
+      expect(result.items.first.statuses.containsKey('Stunned'), false);
     });
   });
 }
