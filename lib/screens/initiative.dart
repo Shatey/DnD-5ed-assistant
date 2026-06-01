@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:initiative_support/models/initiative/initiative_item_model.dart';
 import 'package:initiative_support/screens/statuses_screen.dart';
 import 'package:initiative_support/services/initiativeDB.dart';
-import 'package:initiative_support/services/initiative_turn_service.dart';
 import 'package:initiative_support/widgets/initiative/initiative_actions/new_initiative_item.dart';
 import 'package:initiative_support/widgets/initiative/initiative_list/initiative_list.dart';
 import 'package:initiative_support/widgets/main_drawer.dart';
@@ -34,13 +33,10 @@ class _InitiativeState extends ConsumerState<Initiative> {
   }
 
   void _sortItems() {
-    final result = InitiativeTurnService.normalizeRound(
-      items: ref.read(initiativeProvider),
-      currentRound: _round,
-    );
+    final nextRound = ref.read(initiativeProvider.notifier).normalizeRound(_round);
 
     setState(() {
-      _round = result.round;
+      _round = nextRound;
     });
   }
 
