@@ -14,7 +14,7 @@ class InitiativeItemModel {
     int? currentHp,
     required this.maxHp,
     required this.initiative,
-    required this.kd,
+    required this.armorClass,
     required this.monsterId,
     required this.statuses,
   }) : currentHp = currentHp ?? maxHp;
@@ -26,7 +26,7 @@ class InitiativeItemModel {
   String name;
 
   /// Armor class.
-  int kd;
+  int armorClass;
 
   /// Maximum hit points.
   int maxHp;
@@ -52,7 +52,7 @@ class InitiativeItemModel {
   InitiativeItemModel copyWith({
     int? id,
     String? name,
-    int? kd,
+    int? armorClass,
     int? maxHp,
     int? currentHp,
     int? initiative,
@@ -63,7 +63,7 @@ class InitiativeItemModel {
     return InitiativeItemModel(
       id: id ?? this.id,
       name: name ?? this.name,
-      kd: kd ?? this.kd,
+      armorClass: armorClass ?? this.armorClass,
       maxHp: maxHp ?? this.maxHp,
       currentHp: currentHp ?? this.currentHp,
       initiative: initiative ?? this.initiative,
@@ -80,7 +80,7 @@ class InitiativeItemModel {
       'name': name,
       'current_hit_points': currentHp,
       'max_hit_points': maxHp,
-      'armor_class': kd,
+      'armor_class': armorClass,
       'initiative': initiative,
       'monster_id': monsterId,
       'has_acted': hasActed ? 1 : 0,
@@ -99,7 +99,7 @@ class InitiativeItemModel {
       maxHp: row['max_hit_points'] as int,
       currentHp: row['current_hit_points'] as int,
       initiative: row['initiative'] as int,
-      kd: row['armor_class'] as int,
+      armorClass: row['armor_class'] as int,
       monsterId: row['monster_id'] as int,
       statuses: statusesJson.map(
         (key, value) => MapEntry(key, int.parse(value.toString())),
