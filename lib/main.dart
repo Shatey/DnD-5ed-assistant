@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:flutter/services.dart';
 import 'package:initiative_support/screens/tabs.dart';
 
-var kColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color.fromARGB(255, 96, 59, 181),
+const _lightSeedColor = Color.fromARGB(255, 96, 59, 181);
+const _darkSeedColor = Color.fromARGB(255, 5, 99, 125);
+
+final _lightColorScheme = ColorScheme.fromSeed(
+  seedColor: _lightSeedColor,
 );
 
-var kDarkColorScheme = ColorScheme.fromSeed(
+final _darkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  seedColor: const Color.fromARGB(255, 5, 99, 125),
+  seedColor: _darkSeedColor,
 );
 
 void main() {
@@ -18,128 +20,68 @@ void main() {
       child: DndAssistant(),
     ),
   );
-  // runApp(
-  //   MaterialApp(
-  //     darkTheme: ThemeData.dark().copyWith(
-  //       useMaterial3: true,
-  //       colorScheme: kDarkColorScheme,
-  //       cardTheme: const CardTheme().copyWith(
-  //         color: kDarkColorScheme.secondaryContainer,
-  //         margin: const EdgeInsets.symmetric(
-  //           horizontal: 16,
-  //           vertical: 8,
-  //         ),
-  //       ),
-  //       elevatedButtonTheme: ElevatedButtonThemeData(
-  //         style: ElevatedButton.styleFrom(
-  //           backgroundColor: kDarkColorScheme.primaryContainer,
-  //           foregroundColor: kDarkColorScheme.onPrimaryContainer,
-  //         ),
-  //       ),
-  //       iconButtonTheme: IconButtonThemeData(
-  //         style: IconButton.styleFrom(
-  //           foregroundColor: kDarkColorScheme.onSecondaryContainer,
-  //         ),
-  //       ),
-  //     ),
-  //     theme: ThemeData().copyWith(
-  //       useMaterial3: true,
-  //       colorScheme: kColorScheme,
-  //       appBarTheme: const AppBarTheme().copyWith(
-  //         backgroundColor: kColorScheme.onPrimaryContainer,
-  //         foregroundColor: kColorScheme.primaryContainer,
-  //       ),
-  //       cardTheme: const CardTheme().copyWith(
-  //         color: kColorScheme.secondaryContainer,
-  //         margin: const EdgeInsets.symmetric(
-  //           horizontal: 16,
-  //           vertical: 8,
-  //         ),
-  //       ),
-  //       elevatedButtonTheme: ElevatedButtonThemeData(
-  //         style: ElevatedButton.styleFrom(
-  //           backgroundColor: kColorScheme.primaryContainer,
-  //         ),
-  //       ),
-  //       iconButtonTheme: IconButtonThemeData(
-  //         style: IconButton.styleFrom(
-  //           foregroundColor: kColorScheme.onSecondaryContainer,
-  //         ),
-  //       ),
-  //       textTheme: ThemeData().textTheme.copyWith(
-  //             titleLarge: TextStyle(
-  //               fontWeight: FontWeight.bold,
-  //               color: kColorScheme.onSecondaryContainer,
-  //               fontSize: 16,
-  //             ),
-  //           ),
-  //     ),
-  //     home: const TabsScreen(),
-  //   ),
-  // );
 }
 
+/// Root application widget.
 class DndAssistant extends StatelessWidget {
-  const DndAssistant({Key? key}) : super(key: key);
+  /// Creates the DnD assistant app.
+  const DndAssistant({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      darkTheme: ThemeData.dark().copyWith(
-        useMaterial3: true,
-        colorScheme: kDarkColorScheme,
-        cardTheme: const CardTheme().copyWith(
-          color: kDarkColorScheme.secondaryContainer,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: kDarkColorScheme.primaryContainer,
-            foregroundColor: kDarkColorScheme.onPrimaryContainer,
-          ),
-        ),
-        iconButtonTheme: IconButtonThemeData(
-          style: IconButton.styleFrom(
-            foregroundColor: kDarkColorScheme.onSecondaryContainer,
-          ),
-        ),
-      ),
-      theme: ThemeData().copyWith(
-        useMaterial3: true,
-        colorScheme: kColorScheme,
-        appBarTheme: const AppBarTheme().copyWith(
-          backgroundColor: kColorScheme.onPrimaryContainer,
-          foregroundColor: kColorScheme.primaryContainer,
-        ),
-        cardTheme: const CardTheme().copyWith(
-          color: kColorScheme.secondaryContainer,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: kColorScheme.primaryContainer,
-          ),
-        ),
-        iconButtonTheme: IconButtonThemeData(
-          style: IconButton.styleFrom(
-            foregroundColor: kColorScheme.onSecondaryContainer,
-          ),
-        ),
-        textTheme: ThemeData().textTheme.copyWith(
-              titleLarge: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: kColorScheme.onSecondaryContainer,
-                fontSize: 16,
-              ),
-            ),
-      ),
+      debugShowCheckedModeBanner: false,
+      title: 'DnD 5e Assistant',
+      theme: _buildTheme(_lightColorScheme),
+      darkTheme: _buildTheme(_darkColorScheme),
       home: const TabsScreen(),
     );
   }
+}
+
+ThemeData _buildTheme(ColorScheme colorScheme) {
+  final baseTheme = ThemeData(
+    useMaterial3: true,
+    colorScheme: colorScheme,
+  );
+
+  return baseTheme.copyWith(
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+      backgroundColor: colorScheme.surface,
+      foregroundColor: colorScheme.onSurface,
+      elevation: 0,
+    ),
+    cardTheme: CardTheme(
+      color: colorScheme.secondaryContainer,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: colorScheme.primaryContainer,
+        foregroundColor: colorScheme.onPrimaryContainer,
+      ),
+    ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
+      ),
+    ),
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(
+        foregroundColor: colorScheme.onSecondaryContainer,
+      ),
+    ),
+    textTheme: baseTheme.textTheme.copyWith(
+      titleLarge: baseTheme.textTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.bold,
+        color: colorScheme.onSecondaryContainer,
+      ),
+    ),
+  );
 }
