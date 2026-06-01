@@ -91,7 +91,7 @@ class _InitiativeItemState extends State<InitiativeItem> {
                   ),
                   _StatChip(
                     icon: Icons.shield_outlined,
-                    label: 'AC ${widget.mob.kd}',
+                    label: 'AC ${widget.mob.armorClass}',
                   ),
                   _StatChip(
                     icon: Icons.bolt_outlined,
