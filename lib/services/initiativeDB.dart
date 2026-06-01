@@ -59,6 +59,16 @@ class InitiativeDB extends StateNotifier<List<InitiativeItemModel>> {
     final initiativeItems = data.map(InitiativeItemModel.fromMap).toList();
     state = InitiativeTurnService.sortItems(initiativeItems);
   }
+
+  /// Applies turn progression rules and returns the resulting round number.
+  int normalizeRound(int currentRound) {
+    final result = InitiativeTurnService.normalizeRound(
+      items: state,
+      currentRound: currentRound,
+    );
+    state = result.items;
+    return result.round;
+  }
 }
 
 /// Provides the current initiative list and persistence operations.
