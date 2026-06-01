@@ -1,86 +1,67 @@
-import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:initiative_support/models/initiative/initiative_item_model.dart';
 import 'package:initiative_support/services/databaseService.dart';
+import 'package:initiative_support/services/initiative_turn_service.dart';
 import 'package:sqflite/sqflite.dart';
 
+/// Riverpod state notifier that stores and loads initiative participants.
+///
+/// The notifier is responsible for persistence and state updates. Pure turn
+/// ordering and round-normalization rules live in [InitiativeTurnService].
 class InitiativeDB extends StateNotifier<List<InitiativeItemModel>> {
+  /// Creates an empty initiative state.
   InitiativeDB() : super(const []);
 
+  /// Opens the shared SQLite database.
   Future<Database> getDB() async {
     final databaseService = DatabaseService.getInstance();
-    return await databaseService.openDatabase();
+    return databaseService.openDatabase();
   }
 
-  void addInitiativeItem(InitiativeItemModel initiativeItemModel) async {
+  /// Adds a new participant to local storage and refreshes state.
+  Future<void> addInitiativeItem(
+    InitiativeItemModel initiativeItemModel,
+  ) async {
     final db = await getDB();
-    db.insert(
+    await db.insert(
       'initiative',
       initiativeItemModel.toMap(),
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );
+    await getInitiativeItems();
   }
 
-  void updateInitiativeItem(InitiativeItemModel initiativeItemModel) async {
+  /// Updates an existing participant and refreshes state.
+  Future<void> updateInitiativeItem(
+    InitiativeItemModel initiativeItemModel,
+  ) async {
     final db = await getDB();
-    db.insert(
+    await db.insert(
       'initiative',
       initiativeItemModel.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    await getInitiativeItems();
   }
 
-  void clearInitiative() async {
+  /// Deletes every participant from the active combat scene.
+  Future<void> clearInitiative() async {
     final db = await getDB();
-    db.delete('initiative');
+    await db.delete('initiative');
+    state = const [];
   }
 
+  /// Loads participants from SQLite and applies initiative ordering.
   Future<void> getInitiativeItems() async {
     final db = await getDB();
-
     final data = await db.query('initiative');
-    final initiativeItems = data.map(
-      (row) {
-        Map<String, dynamic> statusesJson =
-            jsonDecode(row['statuses'] as String);
-        Map<String, int> correctStatuses = statusesJson
-            .map((key, value) => MapEntry(key, int.parse(value.toString())));
-        return InitiativeItemModel(
-          id: row['id'] as int,
-          name: row['name'] as String,
-          maxHp: row['max_hit_points'] as int,
-          currentHp: row['current_hit_points'] as int,
-          initiative: row['initiative'] as int,
-          kd: row['armor_class'] as int,
-          monsterId: row['monster_id'] as int,
-          statuses: correctStatuses,
-          hasActed: row['has_acted'] as int == 1 ? true : false,
-        );
-      },
-    ).toList();
-    if (initiativeItems.every((item) => item.hasActed)) {
-      for (var item in initiativeItems) {
-        item.hasActed = !item.hasActed;
-        item.statuses.updateAll(
-          (key, value) => value > 0 ? value - 1 : value,
-        );
-        item.statuses.removeWhere((key, value) => value == 0);
-      }
-    }
-    if (initiativeItems.length > 1) {
-      initiativeItems.sort((first, second) {
-        if (first.hasActed == second.hasActed) {
-          return second.initiative.compareTo(first.initiative);
-        } else {
-          return first.hasActed ? 1 : -1;
-        }
-      });
-    }
-    state = initiativeItems;
+
+    final initiativeItems = data.map(InitiativeItemModel.fromMap).toList();
+    state = InitiativeTurnService.sortItems(initiativeItems);
   }
 }
 
+/// Provides the current initiative list and persistence operations.
 final initiativeProvider =
     StateNotifierProvider<InitiativeDB, List<InitiativeItemModel>>(
   (ref) => InitiativeDB(),
