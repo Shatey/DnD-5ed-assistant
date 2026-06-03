@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:initiative_support/models/initiative/initiative_item_model.dart';
-import 'package:initiative_support/services/initiativeDB.dart';
+import 'package:initiative_support/services/initiative_db.dart';
 import 'package:initiative_support/utils/characteristics_checker.dart';
 
 /// Bottom-sheet form used to edit a combat participant.
