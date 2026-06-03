@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:initiative_support/models/initiative/initiative_item_model.dart';
 import 'package:initiative_support/screens/statuses_screen.dart';
-import 'package:initiative_support/services/initiativeDB.dart';
+import 'package:initiative_support/services/initiative_db.dart';
 import 'package:initiative_support/widgets/initiative/initiative_actions/new_initiative_item.dart';
 import 'package:initiative_support/widgets/initiative/initiative_list/initiative_list.dart';
 import 'package:initiative_support/widgets/main_drawer.dart';
@@ -25,7 +25,7 @@ class _InitiativeState extends ConsumerState<Initiative> {
   @override
   void initState() {
     super.initState();
-    ref.read(initiativeProvider.notifier).getInitiativeItems();
+    ref.read(initiativeProvider.notifier).loadInitiativeItems();
   }
 
   Future<void> _saveNewCharacter(InitiativeItemModel item) async {
