@@ -19,6 +19,36 @@ class InitiativeTurnResult {
 class InitiativeTurnService {
   const InitiativeTurnService._();
 
+  /// Adds a participant and returns the updated initiative order.
+  static List<InitiativeItemModel> addParticipant(
+    List<InitiativeItemModel> items,
+    InitiativeItemModel participant,
+  ) {
+    return sortItems([...items, participant]);
+  }
+
+  /// Applies damage to a participant without allowing HP to go below zero.
+  static InitiativeItemModel applyDamage(
+    InitiativeItemModel item,
+    int damage,
+  ) {
+    if (damage <= 0) return item;
+
+    item.currentHp = (item.currentHp - damage).clamp(0, item.maxHp);
+    return item;
+  }
+
+  /// Applies healing to a participant without allowing HP to exceed max HP.
+  static InitiativeItemModel applyHealing(
+    InitiativeItemModel item,
+    int healing,
+  ) {
+    if (healing <= 0) return item;
+
+    item.currentHp = (item.currentHp + healing).clamp(0, item.maxHp);
+    return item;
+  }
+
   /// Sorts items so participants who have not acted go first.
   ///
   /// Participants with the same acted state are ordered by initiative descending.
