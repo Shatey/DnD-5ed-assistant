@@ -52,7 +52,7 @@ ThemeData _buildTheme(ColorScheme colorScheme) {
       foregroundColor: colorScheme.onSurface,
       elevation: 0,
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: colorScheme.secondaryContainer,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
