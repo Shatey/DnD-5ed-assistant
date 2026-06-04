@@ -94,7 +94,9 @@ class _CurrentTurnCard extends StatelessWidget {
               Text(
                 'Нет активных статусов',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onPrimaryContainer.withOpacity(0.75),
+                      color: colorScheme.onPrimaryContainer.withValues(
+                        alpha: 0.75,
+                      ),
                     ),
               )
             else
@@ -132,7 +134,7 @@ class _StatusChip extends StatelessWidget {
     return Chip(
       avatar: const Icon(Icons.brightness_5_outlined, size: 16),
       label: Text('$name · $durationLabel'),
-      backgroundColor: colorScheme.surface.withOpacity(0.8),
+      backgroundColor: colorScheme.surface.withValues(alpha: 0.8),
       side: BorderSide.none,
       labelStyle: TextStyle(color: colorScheme.onSurface),
     );
