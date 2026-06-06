@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:initiative_support/models/bestiary/monster_details.dart';
-import 'package:initiative_support/services/databaseService.dart';
+import 'package:initiative_support/services/database_service.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class BestiaryDB extends StateNotifier<List<MonsterDetails>> {
@@ -8,12 +8,10 @@ class BestiaryDB extends StateNotifier<List<MonsterDetails>> {
 
   Future<Database> getDB() async {
     final databaseService = DatabaseService.getInstance();
-    return await databaseService.openDatabase();
+    return databaseService.openDatabase();
   }
 
   void addBestiary(MonsterDetails monsterDetails) async {
-    // final databaseService = DatabaseService.getInstance();
-    // final db = await databaseService.openDatabase();
     final db = await getDB();
     db.insert(
       'bestiary',
@@ -23,15 +21,11 @@ class BestiaryDB extends StateNotifier<List<MonsterDetails>> {
   }
 
   void clearBestiary() async {
-    // final databaseService = DatabaseService.getInstance();
-    // final db = await databaseService.openDatabase();
     final db = await getDB();
     db.delete('bestiary', where: 'id > -2');
   }
 
   Future<void> getBestiary() async {
-    // final databaseService = DatabaseService.getInstance();
-    // final db = await databaseService.openDatabase();
     final db = await getDB();
 
     final data = await db.query('bestiary');

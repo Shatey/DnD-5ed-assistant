@@ -43,16 +43,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .metadata
-*.gradle
-*.xml
-*.kt
-android/app/src/main/res/mipmap-hdpi/ic_launcher.png
-android/app/src/main/res/mipmap-mdpi/ic_launcher.png
-android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
-android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
-android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-android/gradle.properties
-android/gradle/wrapper/gradle-wrapper.properties
 linux/CMakeLists.txt
 linux/flutter/CMakeLists.txt
 linux/flutter/generated_plugin_registrant.cc
@@ -73,7 +63,6 @@ macos/Runner/DebugProfile.entitlements
 macos/Runner/Release.entitlements
 pubspec.lock
 README.md
-test/widget_test.dart
 web/favicon.png
 web/icons/Icon-192.png
 web/icons/Icon-512.png
