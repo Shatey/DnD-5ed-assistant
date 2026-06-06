@@ -43,16 +43,12 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .metadata
-*.gradle
-*.xml
-*.kt
 android/app/src/main/res/mipmap-hdpi/ic_launcher.png
 android/app/src/main/res/mipmap-mdpi/ic_launcher.png
 android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
 android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
 android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
 android/gradle.properties
-android/gradle/wrapper/gradle-wrapper.properties
 linux/CMakeLists.txt
 linux/flutter/CMakeLists.txt
 linux/flutter/generated_plugin_registrant.cc
