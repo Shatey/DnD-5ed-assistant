@@ -48,7 +48,6 @@ android/app/src/main/res/mipmap-mdpi/ic_launcher.png
 android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
 android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
 android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-android/gradle.properties
 linux/CMakeLists.txt
 linux/flutter/CMakeLists.txt
 linux/flutter/generated_plugin_registrant.cc
