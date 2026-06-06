@@ -68,7 +68,6 @@ macos/Runner/DebugProfile.entitlements
 macos/Runner/Release.entitlements
 pubspec.lock
 README.md
-test/widget_test.dart
 web/favicon.png
 web/icons/Icon-192.png
 web/icons/Icon-512.png
